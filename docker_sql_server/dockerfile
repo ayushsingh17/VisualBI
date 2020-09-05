@@ -1,0 +1,14 @@
+# Image for SQL server
+FROM microsoft/mssql-server-linux:latest
+WORKDIR /DBScripts
+COPY DBScripts /DBScripts
+COPY import-data.sh /DBScripts
+COPY entrypoint.sh /DBScripts
+RUN chmod +x import-data.sh && \
+    chmod +x entrypoint.sh
+# For auto build    
+ENV ACCEPT_EULA Y
+ENV SA_PASSWORD Password1!
+# Exposing Port for connection
+EXPOSE 1433
+CMD /bin/bash ./entrypoint.sh
